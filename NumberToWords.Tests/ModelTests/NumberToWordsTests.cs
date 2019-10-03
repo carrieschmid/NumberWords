@@ -6,11 +6,11 @@ namespace NumberToWords.Tests {
     [TestClass]
     public class NumberToWordsTest {
 
-        Converter converter;
+        NumConverter converter;
 
         [TestInitialize]
         public void Startup () {
-            converter = new Converter ();
+            converter = new NumConverter ();
 
         }
 
@@ -20,9 +20,31 @@ namespace NumberToWords.Tests {
         }
 
         [TestMethod]
-        public void CheckInput_CheckForNonAlphabeticInputs_True () {
+        public void CheckInput_CheckForNonNumericInputs_True () {
             // any necessary logic to prep for test; instantiating new classes, etc.
-            Assert.AreEqual (true, converter.CheckInput ("a"));
+            Assert.AreEqual (true, converter.CheckInput ("2"));
         }
+
+        [TestMethod]
+        public void CheckInput_CheckForNonNumericInputs_False () {
+            // any necessary logic to prep for test; instantiating new classes, etc.
+            Assert.AreEqual (false, converter.CheckInput ("a"));
+        }
+
+        [TestMethod]
+        public void Converter_ConvertsNumbersOneThroughNine_StringEight () {
+            Assert.AreEqual ("eight", converter.Converter ("8"));
+        }
+
+        [TestMethod]
+        public void Converter_ConvertsNumbersOneThroughNineteen_StringEighteen () {
+            Assert.AreEqual ("eighteen", converter.Converter ("18"));
+        }
+
+        [TestMethod]
+        public void Converter_ConvertsNumbersModTen_StringTens () {
+            Assert.AreEqual ("twenty", converter.Converter ("25"));
+        }
+
     }
 }
