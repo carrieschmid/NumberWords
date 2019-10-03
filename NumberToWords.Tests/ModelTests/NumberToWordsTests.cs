@@ -46,5 +46,15 @@ namespace NumberToWords.Tests {
             Assert.AreEqual ("twenty five", converter.Converter ("25"));
         }
 
+        [TestMethod]
+        public void Converter_ConvertsNumbersModTen_StringHundreds () {
+            Assert.AreEqual ("one hundred one", converter.Converter ("101"));
+        }
+
+        [TestMethod]
+        public void Converter_ConvertsNumbersModTen_StringHundredsAndTens () {
+            Assert.AreEqual ("one hundred twenty one", converter.Converter ("121"));
+        }
+
     }
 }

@@ -21,66 +21,71 @@ namespace NumberToWords.Models {
             return true;
         }
 
+        public List<string> GroupDigits (string input) 
+        {
+            int length = input.Length;
+            List<string> groupedDigits = new List<string> ();
+            string threeDigits = "";
+            for (int i = 0; i < input.Length; i++) {
+                if (i % 3 == 0 && i != 0) {
+                    groupedDigits.Add (threeDigits);
+                    threeDigits = input[i].ToString ();
+                } else {
+                    threeDigits += input[i].ToString ();
+                }
+            }
+            return groupedDigits;
+        }
+
+        public string ConvertAll(List<string> groupedDigits)
+        {
+            string result = "";
+            int groupsCount = groupedDigits.Count;
+            for(int i = 0; i < groupsCount; i++)
+            {
+                if(groupsCount == 1)
+                {
+                    result = Convert(groupsCount[0]);
+                }
+            }
+        }
+
         public string Converter (string inputDigits) {
             int numLength = inputDigits.Length;
             string result = "";
 
-            // check onesplace -- if not 0 -> set ones digit word
-            // if existing, check tens, if == 1 use direct lookup of "teens section", otherwise look up "tens section"
-            // if existing, check hundreds use direct lookup of "ones section" and add 'hundred'           
-            
             char onesString = ';';
             char tensString = ';';
             char hundredsString = ';';
-            char thousandsString = ';';
-            char tenthousandsString = ';';
-            char hundredthousandsString = ';';
+
             try {
-                onesString = inputDigits[inputDigits.Length -1];
+                onesString = inputDigits[inputDigits.Length - 1];
                 tensString = inputDigits[inputDigits.Length - 2];
-                hundredsString = inputDigits[inputDigits.Length - 3];
-                thousandsString = inputDigits[inputDigits.Length - 4];
-                tenthousandsString = inputDigits[inputDigits.Length - 5];
-                hundredthousandsString = inputDigits[inputDigits.Length - 6];
+                hundredsString = inputDigits[inputDigits.Length - 3];;
             } catch (IndexOutOfRangeException) {
                 // allow it
             }
 
-            int ones = int.Parse (onesString.ToString());
-            if (tensString != ';')
-            {
-                int tens = int.Parse(tensString.ToString());
-                if(tens == 1)
-                {
-                    int tensAndOnes = int.Parse(tensString.ToString()+onesString.ToString());
+            int ones = int.Parse (onesString.ToString ());
+            if (tensString != ';' && tensString != '0') {
+                int tens = int.Parse (tensString.ToString ());
+                if (tens == 1) {
+                    int tensAndOnes = int.Parse (tensString.ToString () + onesString.ToString ());
                     result = OneToNinteen[tensAndOnes];
-                }
-                else
-                {
+                } else {
                     result = OneToNinteen[ones];
-                    result = TensMultiples[tens]+ " " + result;
+                    result = TensMultiples[tens] + " " + result;
                 }
-            }
-            else {
+            } else {
                 result = OneToNinteen[ones];
             }
-
-            // for (int i = inputDigits.Length - 1; i >= 0; i--) {
-            //     string digitString = inputDigits[i].ToString ();
-            //     int digitNum = int.Parse (digitString);
-            //     result += " " + OneToNinteen[digitNum];
-
-            //     if (i == 1) {
-            //         string tensAndOnesString = inputDigits.Substring (1);
-            //         int tensAndOnesDigits = int.Parse (tensAndOnesString);
-
-            //         result += TensMultiples[digitNum];
-            //     } else if (i == 2 && digitNum != 0) { }
-            // }
+            if (hundredsString != ';') {
+                int hundreds = int.Parse (hundredsString.ToString ());
+                result = OneToNinteen[hundreds] + " hundred " + result;
+            }
 
             return result;
         }
-        
 
     }
 }

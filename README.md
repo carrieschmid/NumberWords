@@ -14,3 +14,15 @@
 
 
 
+|Behavior|Input|Output|
+|----|------|-----|
+|Ignores non-numeric inputs| se, # | Please enter a number|
+|Accepts numeric input under 1,000,000| 100 | one hundred|
+|Convert 0-9 to a single word| 9| nine|
+|Convert mod 10 < 100 to a single word| 20 | twenty|
+|Convert 10-19 to a single word when 10s digit equals 1 | 10 | ten|
+| Concate ones and tens words together when value is not mod 10 < 100 | 25 | twenty five |
+|Use 0-9 single word and concatenate "hundred" for numbers mod 100 < 1000 | 200| two hundred|
+|Ignore digits when it equals 0 for all places except ones digit | 209 | two hundred nine |
+|Perform rules for hundreds, tens and ones for thousands digits and then concatenate 'thousand'|234000|Two hundred thirty four thousand |
+|Concatenate thousands digit words to words representing hundreds digits | 234567 | Two hundred thirty four thousand five hundred sixty seven |
