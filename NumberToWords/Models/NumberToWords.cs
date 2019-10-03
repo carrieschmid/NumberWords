@@ -27,36 +27,38 @@ namespace NumberToWords.Models {
 
             // check onesplace -- if not 0 -> set ones digit word
             // if existing, check tens, if == 1 use direct lookup of "teens section", otherwise look up "tens section"
-            // if existing, check hundreds use direct lookup of "ones section" and add 'hundred'            
-            string onesString;
-            string tensString;
-            string hundredsString;
-            string thousandsString;
-            string tenthousandsString;
-            string hundredthousandsString;
+            // if existing, check hundreds use direct lookup of "ones section" and add 'hundred'           
+            
+            char onesString = ';';
+            char tensString = ';';
+            char hundredsString = ';';
+            char thousandsString = ';';
+            char tenthousandsString = ';';
+            char hundredthousandsString = ';';
             try {
-                onesString = inputDigits[inputDigits.Length];
-                tensString = inputDigits[inputDigits.Length - 1];
-                hundredsString = inputDigits[inputDigits.Length - 2];
-                thousandsString = inputDigits[inputDigits.Length - 3];
-                tenthousandsString = inputDigits[inputDigits.Length - 4];
-                hundredthousandsString = inputDigits[inputDigits.Length - 5];
+                onesString = inputDigits[inputDigits.Length -1];
+                tensString = inputDigits[inputDigits.Length - 2];
+                hundredsString = inputDigits[inputDigits.Length - 3];
+                thousandsString = inputDigits[inputDigits.Length - 4];
+                tenthousandsString = inputDigits[inputDigits.Length - 5];
+                hundredthousandsString = inputDigits[inputDigits.Length - 6];
             } catch (IndexOutOfRangeException) {
                 // allow it
             }
 
-            int ones = int.Parse (onesString);
-            if (tensString != null)
+            int ones = int.Parse (onesString.ToString());
+            if (tensString != ';')
             {
-                int tens = int.Parse(tensString);
+                int tens = int.Parse(tensString.ToString());
                 if(tens == 1)
                 {
-                    int tensAndOnes = int.Parse(tensString+onesString);
+                    int tensAndOnes = int.Parse(tensString.ToString()+onesString.ToString());
                     result = OneToNinteen[tensAndOnes];
                 }
                 else
                 {
-                    result += TensMultiples[tens];
+                    result = OneToNinteen[ones];
+                    result = TensMultiples[tens]+ " " + result;
                 }
             }
             else {
@@ -76,8 +78,9 @@ namespace NumberToWords.Models {
             //     } else if (i == 2 && digitNum != 0) { }
             // }
 
-            // return result;
+            return result;
         }
+        
 
     }
 }

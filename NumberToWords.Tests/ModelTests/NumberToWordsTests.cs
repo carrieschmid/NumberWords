@@ -43,7 +43,7 @@ namespace NumberToWords.Tests {
 
         [TestMethod]
         public void Converter_ConvertsNumbersModTen_StringTens () {
-            Assert.AreEqual ("twenty", converter.Converter ("25"));
+            Assert.AreEqual ("twenty five", converter.Converter ("25"));
         }
 
     }
